@@ -5,16 +5,17 @@ import os
 
 EC = "/sys/kernel/debug/ec/ec0/io"
 OFFSET = 128
+
+
 def write_to_ec(addr, value):
-		with open(EC , 'r+b') as ec:
-				ec.seek(addr)
-				ec.write(bytes.fromhex(value[2:]))
+	with open(EC , 'r+b') as ec:
+		ec.seek(addr)
+		ec.write(bytes.fromhex(value[2:]))
 
 def read_from_ec(addr):
-		with open (EC , 'r+b') as ec:
-				ec.seek(addr)
-				dat = ec.read(1).hex()
-				return dat
+	with open (EC , 'r+b') as ec:
+		ec.seek(addr)
+		return ec.read(1).hex()
 
 def hex_to_int(hex):
 		return int(hex,16)
