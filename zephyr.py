@@ -63,22 +63,27 @@ def main():
 	elif sys.argv[1] == '--fan-speed' or sys.argv[1] == '-f':
 		if sys.argv[2] == '--get' or sys.argv[2] == '-g':
 			os.system("modprobe ec_sys")
+			
 			cpu_cursor = 0x71
 			gpu_cursor = 0x8A
 			cpu_readings = []
 			gpu_readings = []
+			
 			while cpu_cursor <= 0x77:
 				cpu_readings.append(str(hex_to_int(read_from_ec(cpu_cursor))))
 				cpu_cursor = cpu_cursor + 0x01
+				
 			while gpu_cursor <= 0x8F:
 				gpu_readings.append(str(hex_to_int(read_from_ec(gpu_cursor))))
 				gpu_cursor = gpu_cursor + 0x01
+				
 			print("CPU fan :" + '\t',end='')
 			[print(cpu + '\t',end='') for cpu in cpu_readings]
 			print('\n')
 			print("GPU fan :" + '\t',end='')
 			[print(gpu + '\t', end = '') for gpu in gpu_readings]
 			print('\n')
+			
 		elif sys.argv[2] == '--set' or sys.argv[2] == '-s':
 			os.system("modprobe ec_sys write_support=1")
 			with open(sys.argv[3], 'r') as config:
@@ -87,9 +92,11 @@ def main():
 				gpu_config = config.readline().strip().split('\t')
 				cpu_cursor = 0x71
 				gpu_cursor = 0x8A
+				
 				for cpu in cpu_config:
 					write_to_ec(cpu_cursor, int_to_hex(int(cpu)))
 					cpu_cursor = cpu_cursor + 0x01
+				
 				for gpu in gpu_config:
 					write_to_ec(gpu_cursor, int_to_hex(int(gpu)))
 					gpu_cursor = gpu_cursor + 0x01
