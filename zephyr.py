@@ -5,6 +5,8 @@ import os
 
 EC = "/sys/kernel/debug/ec/ec0/io"
 OFFSET = 128
+
+
 def write_to_ec(addr, value):
 	with open(EC , 'r+b') as ec:
 		ec.seek(addr)
@@ -16,7 +18,7 @@ def read_from_ec(addr):
 		return ec.read(1).hex()
 
 def hex_to_int(hex):
-		return int(hex,16)
+	return int(hex,16)
 
 def int_to_hex(integer):
 	tmp = hex(integer)
@@ -26,7 +28,7 @@ def int_to_hex(integer):
 		return tmp[:2] + '0' + tmp[2:]
 		
 def print_help():
-		print("This is help")
+	print("This is help")
 
 
 
@@ -35,7 +37,7 @@ def main():
 		print_help()
 		
 	elif sys.argv[1] == '--help' or sys.argv[1] == '-h':
-			print_help()
+		print_help()
 
 
 	elif sys.argv[1] == '--battery-threshold' or sys.argv[1] == '-b':
